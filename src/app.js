@@ -1,12 +1,22 @@
 const express = require("express")
 // const mongoose = require("");
+require("./DB/connection")
+const Student = require("./Models/students")
 const app = express()
 const port = process.env.PORT || 3000
+app.use(express.json());
 
-//create a new student
-
+//create a new student && post API
 app.post("/students",(req,res)=>{
-    res.send("hello from the other sides");
+    console.log(req.body)
+    const user = new Student(req.body)
+
+    user.save().then(()=>{
+        res.status(201).send(user);
+    }).catch((e)=>{
+        res.status(400).send(e);
+    })
+    // res.send("hello from the other sides");
 })
 
 app.listen(port, ()=>{
