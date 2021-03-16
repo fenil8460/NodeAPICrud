@@ -7,15 +7,27 @@ const port = process.env.PORT || 3000
 app.use(express.json());
 
 //create a new student && post API
-app.post("/students",(req,res)=>{
-    console.log(req.body)
-    const user = new Student(req.body)
+// app.post("/students",(req,res)=>{
+//     console.log(req.body)
+//     const user = new Student(req.body)
 
-    user.save().then(()=>{
+//     user.save().then(()=>{
+//         res.status(201).send(user);
+//     }).catch((e)=>{
+//         res.status(400).send(e);
+//     })
+//     // res.send("hello from the other sides");
+// })
+
+app.post("/students",async(req,res)=>{
+    try{
+        const user = new Student(req.body)
+        console.log(req.body)
+        const createUser = await user.save()
         res.status(201).send(user);
-    }).catch((e)=>{
+    }catch(e){
         res.status(400).send(e);
-    })
+    }
     // res.send("hello from the other sides");
 })
 
