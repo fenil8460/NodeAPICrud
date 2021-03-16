@@ -26,9 +26,31 @@ app.post("/students",async(req,res)=>{
         const createUser = await user.save()
         res.status(201).send(user);
     }catch(e){
-        res.status(400).send(e);
+        res.status(404 ).send(e);
     }
     // res.send("hello from the other sides");
+})
+
+//get data API
+app.get("/students",async(req,res)=>{
+    try{
+        const studentsData = await Student.find()
+        res.send(studentsData)
+    }catch(e){
+        res.send(e)
+    }
+})
+
+//get data Using id or other field
+
+app.get("/students/:id",async(req,res)=>{
+    try{
+        const id = req.params.id
+        const studentsData = await Student.findOne({phone:id})
+        res.status(201).send(studentsData)
+    }catch(e){
+        res.status(404).send(e)
+    }
 })
 
 app.listen(port, ()=>{
