@@ -6,18 +6,18 @@ const app = express()
 const port = process.env.PORT || 3000
 app.use(express.json());
 
-create a new student && post API
-app.post("/students",(req,res)=>{
-    console.log(req.body)
-    const user = new Student(req.body)
+//create a new student && post API
+// app.post("/students",(req,res)=>{
+//     console.log(req.body)
+//     const user = new Student(req.body)
 
-    user.save().then(()=>{
-        res.status(201).send(user);
-    }).catch((e)=>{
-        res.status(400).send(e);
-    })
-    // res.send("hello from the other sides");
-})
+//     user.save().then(()=>{
+//         res.status(201).send(user);
+//     }).catch((e)=>{
+//         res.status(400).send(e);
+//     })
+//     // res.send("hello from the other sides");
+// })
 
 app.post("/students",async(req,res)=>{
     try{
@@ -52,6 +52,23 @@ app.get("/students/:id",async(req,res)=>{
         res.status(404).send(e)
     }
 })
+
+//delete api data
+app.delete("/students/:id",async(req,res)=>{
+    try{
+        const id = req.params.id;
+    const deletestudent = await Student.findByIdAndDelete(req.params.id);
+    if(!id){
+        res.status(400).send();
+    }else{
+        res.status(201).send(deletestudent);
+    }
+    }catch(e){
+
+    }
+})
+
+//update data
 
 app.listen(port, ()=>{
     console.log(`connection is setup at ${port}`)
