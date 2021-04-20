@@ -68,7 +68,20 @@ app.delete("/students/:id",async(req,res)=>{
     }
 })
 
-//update data
+//update pi data
+app.put("/students/:id",async(req,res)=>{
+    try{
+        const _id = req.params.id;
+    const updatedata = await Student.findByIdAndUpdate(_id,req.body);
+    if(!_id){
+        res.status(400).send();
+    }else{
+        res.status(201).send(updatedata);
+    }
+    }catch(e){
+
+    }
+})
 
 app.listen(port, ()=>{
     console.log(`connection is setup at ${port}`)
